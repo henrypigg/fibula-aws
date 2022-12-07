@@ -1,15 +1,24 @@
-# Welcome to your CDK TypeScript project
+# fEMR Self-Bulding Kit
 
-This is a blank project for CDK development with TypeScript.
+### Description
+fEMR is a fast EMR solution for remote clinics who depend on speed and ease of use rather than complex features.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+### Dependencies
+- [Docker](https://docs.docker.com/get-docker/)
 
-## Useful commands
+### Running the Docker Image
+1. Clone the [super-femr repo](https://github.com/CPSECapstone/super-femr).
+2. Ensure Docker is running.
+3. ```docker-compose up```
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
-# fibula-aws
+On M1 macOS, the following line needs to be added to the `docker-compose.yml` file for both services. 
+```
+platform: linux/x86_64
+```
+
+### Installer
+
+Check out our [installer repo](https://github.com/CPSECapstone/macos-installer-builder-femr/tree/master) for directions on how to setup the installer.
+
+## Continous Integration
+Link to CI setup: 
