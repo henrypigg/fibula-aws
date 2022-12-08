@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
+import { FemrProdStage } from './femr-prod-stage';
 
 export class PipelineStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props: cdk.StackProps) {
@@ -15,6 +16,10 @@ export class PipelineStack extends cdk.Stack {
                 commands: ['npm install', 'npm ci', 'npm run build', 'npx cdk synth'],
             })
         });
+
+        pipeline.addStage(new FemrProdStage(this, "Prod", {
+            env: { account: '542839501738', region: 'us-east-1'}
+        }))
     }
 }
   
