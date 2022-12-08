@@ -21,4 +21,4 @@ platform: linux/x86_64
 Check out our [installer repo](https://github.com/CPSECapstone/macos-installer-builder-femr/tree/master) for directions on how to setup the installer.
 
 ## Continous Integration
-Link to CI setup: 
+Link to CI setup: https://us-east-1.console.aws.amazon.com/codesuite/codepipeline/pipelines/FibulaPipeline/view?region=us-east-1
