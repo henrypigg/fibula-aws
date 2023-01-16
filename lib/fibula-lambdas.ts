@@ -10,12 +10,14 @@ interface FibulaLambdasProps {
 }
 
 export class FibulaLambdas extends Construct {
-    readonly sendEnrollmentRequestLambda: Function;
+    readonly sendRequestLambda: Function;
+    readonly sendResponseLambda: Function;
+    readonly requestStatusLambda: Function;
 
     constructor(scope: Construct, id: string, props: FibulaLambdasProps) {
         super(scope, id);
 
-        this.sendEnrollmentRequestLambda = new Function(scope, 'SendEnrollmentRequestLambda', {
+        this.sendRequestLambda = new Function(scope, 'SendEnrollmentRequestLambda', {
             runtime: Runtime.PYTHON_3_9,
             code: Code.fromAsset("resources"),
             handler: "send_email_handler.lambda_handler",
@@ -24,6 +26,18 @@ export class FibulaLambdas extends Construct {
             }
         });
 
-        props.topic.grantPublish(this.sendEnrollmentRequestLambda);
+        this.sendResponseLambda = new Function(scope, 'SendEnrollmentResponseLambda', {
+            runtime: Runtime.PYTHON_3_9,
+            code: Code.fromAsset("resources"),
+            handler: "send_response_handler.lambda_handler"
+        });
+
+        this.requestStatusLambda = new Function(scope, 'RequestStatusLambda', {
+            runtime: Runtime.PYTHON_3_9,
+            code: Code.fromAsset("resources"),
+            handler: "request_status_handler.lambda_handler"
+        });
+
+        props.topic.grantPublish(this.sendRequestLambda);
   }
 }
