@@ -33,7 +33,7 @@ export class FibulaCdkStack extends cdk.Stack {
     
     // API
     this.api = new LambdaRestApi(this, 'FibulaApi', {
-      handler: this.fibulaLambdas.sendRequestLambda,
+      handler: this.fibulaLambdas.defaultLambda,
       proxy: false,
     });
 
