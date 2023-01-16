@@ -7,7 +7,6 @@ import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 
-
 export class FibulaCdkStack extends cdk.Stack {
   readonly sendEnrollmentRequestTopic: Topic;
   readonly fibulaLambdas: FibulaLambdas;

@@ -11,14 +11,14 @@ export class PipelineStack extends cdk.Stack {
             pipelineName: 'FibulaPipeline',
             synth: new ShellStep('Synth', {
                 input: CodePipelineSource.connection('henrypigg/fibula-aws', 'main', {
-                       connectionArn: 'arn:aws:codestar-connections:us-east-1:542839501738:connection/7cc0ec6d-ce30-49bb-9b63-c533fd1d7ec7', // Created using the AWS console
+                       connectionArn: 'arn:aws:codestar-connections:us-east-1:374516698077:connection/20bdd642-8d2a-49ce-91e3-5caa0e02ef92', // Created using the AWS console
                     }),
                 commands: ['npm install', 'npm ci', 'npm run build', 'npx cdk synth'],
             })
         });
 
         pipeline.addStage(new FemrProdStage(this, "Prod", {
-            env: { account: '542839501738', region: 'us-east-1'}
+            env: { account: '374516698077', region: 'us-east-1'}
         }))
     }
 }
