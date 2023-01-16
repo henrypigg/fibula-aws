@@ -10,6 +10,7 @@ interface FibulaLambdasProps {
 }
 
 export class FibulaLambdas extends Construct {
+    readonly defaultLambda: Function;
     readonly sendRequestLambda: Function;
     readonly sendResponseLambda: Function;
     readonly requestStatusLambda: Function;
@@ -17,10 +18,16 @@ export class FibulaLambdas extends Construct {
     constructor(scope: Construct, id: string, props: FibulaLambdasProps) {
         super(scope, id);
 
+        this.defaultLambda = new Function(scope, 'DefaultLambda', {
+            runtime: Runtime.PYTHON_3_9,
+            code: Code.fromAsset("resources"),
+            handler: "default_handler.lambda_handler"
+        });
+
         this.sendRequestLambda = new Function(scope, 'SendEnrollmentRequestLambda', {
             runtime: Runtime.PYTHON_3_9,
             code: Code.fromAsset("resources"),
-            handler: "send_email_handler.lambda_handler",
+            handler: "send_request_handler.lambda_handler",
             environment: {
                 TOPIC_ARN: props.topic.topicArn
             }
