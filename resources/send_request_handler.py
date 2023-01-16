@@ -16,6 +16,7 @@ def format_enrollment_request(event):
     """
 
 def lambda_handler(event, context):
+    print(event)
     client = boto3.client('sns')
     logging.info(f"Received event: {event}")
     response = client.publish(
@@ -26,5 +27,5 @@ def lambda_handler(event, context):
     )
     return {
         'statusCode': 200,
-        'body': response
+        'body': str(response)
     }
