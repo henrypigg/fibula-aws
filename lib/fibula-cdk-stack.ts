@@ -43,5 +43,8 @@ export class FibulaCdkStack extends cdk.Stack {
     const requestId = enroll.addResource('{requestId}');
     requestId.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.requestStatusLambda));
     requestId.addMethod('PUT', new LambdaIntegration(this.fibulaLambdas.sendResponseLambda));
+
+    const conner = this.api.root.addResource('conner');
+    conner.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.connersEndpoint));
   }
 }

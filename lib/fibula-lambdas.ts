@@ -14,6 +14,7 @@ export class FibulaLambdas extends Construct {
     readonly sendRequestLambda: Function;
     readonly sendResponseLambda: Function;
     readonly requestStatusLambda: Function;
+    readonly connersEndpoint: Function;
 
     constructor(scope: Construct, id: string, props: FibulaLambdasProps) {
         super(scope, id);
@@ -43,6 +44,12 @@ export class FibulaLambdas extends Construct {
             runtime: Runtime.PYTHON_3_9,
             code: Code.fromAsset("resources"),
             handler: "request_status_handler.lambda_handler"
+        });
+
+        this.connersEndpoint = new Function(scope, 'ConnersEndpointLambda', {
+            runtime: Runtime.PYTHON_3_9,
+            code: Code.fromAsset("resources"),
+            handler: "conners_endpoint_handler.lambda_handler"
         });
 
         props.topic.grantPublish(this.sendRequestLambda);
