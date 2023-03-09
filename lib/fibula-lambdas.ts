@@ -3,10 +3,12 @@ import { Function } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { Runtime, Code } from 'aws-cdk-lib/aws-lambda'
 import { Topic } from 'aws-cdk-lib/aws-sns';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 interface FibulaLambdasProps {
-    topic: Topic
+    topic: Topic;
+    installerBucket: Bucket;
 }
 
 export class FibulaLambdas extends Construct {
@@ -14,7 +16,7 @@ export class FibulaLambdas extends Construct {
     readonly sendRequestLambda: Function;
     readonly sendResponseLambda: Function;
     readonly requestStatusLambda: Function;
-    readonly connersEndpoint: Function;
+    readonly getInstallerLambda: Function;
 
     constructor(scope: Construct, id: string, props: FibulaLambdasProps) {
         super(scope, id);
@@ -46,12 +48,16 @@ export class FibulaLambdas extends Construct {
             handler: "request_status_handler.lambda_handler"
         });
 
-        this.connersEndpoint = new Function(scope, 'ConnersEndpointLambda', {
+        this.getInstallerLambda = new Function(scope, 'GetInstallerLambda', {
             runtime: Runtime.PYTHON_3_9,
             code: Code.fromAsset("resources"),
-            handler: "conners_endpoint_handler.lambda_handler"
+            handler: "get_installer_handler.lambda_handler",
+            environment: {
+                BUCKET_NAME: props.installerBucket.bucketName
+            }
         });
 
         props.topic.grantPublish(this.sendRequestLambda);
+        props.installerBucket.grantRead(this.getInstallerLambda);
   }
 }

@@ -5,11 +5,13 @@ import {aws_s3 as s3} from 'aws-cdk-lib'
 import { Subscription, Topic } from 'aws-cdk-lib/aws-sns';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 import { LambdaIntegration, LambdaRestApi, RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 
 export class FibulaCdkStack extends cdk.Stack {
   readonly sendEnrollmentRequestTopic: Topic;
+  readonly installerBucket: Bucket;
   readonly fibulaLambdas: FibulaLambdas;
   readonly api: LambdaRestApi
 
@@ -26,9 +28,15 @@ export class FibulaCdkStack extends cdk.Stack {
       new EmailSubscription('henry.pigg@gmail.com')
     )
 
+    // S3 Bucket
+    this.installerBucket = new Bucket(this, 'InstallerBucket', {
+      bucketName: 'fibula-installer'
+    });
+
     // Lambdas
     this.fibulaLambdas = new FibulaLambdas(this, 'Lambdas', {
-      topic: this.sendEnrollmentRequestTopic
+      topic: this.sendEnrollmentRequestTopic,
+      installerBucket: this.installerBucket
     });
     
     // API
@@ -44,7 +52,7 @@ export class FibulaCdkStack extends cdk.Stack {
     requestId.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.requestStatusLambda));
     requestId.addMethod('PUT', new LambdaIntegration(this.fibulaLambdas.sendResponseLambda));
 
-    const conner = this.api.root.addResource('conner');
-    conner.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.connersEndpoint));
+    const installer = this.api.root.addResource('installer');
+    installer.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.getInstallerLambda));
   }
 }
