@@ -23,13 +23,13 @@ export class FibulaLambdas extends Construct {
 
         this.defaultLambda = new Function(scope, 'DefaultLambda', {
             runtime: Runtime.PYTHON_3_9,
-            code: Code.fromAsset("resources"),
+            code: Code.fromAsset("resources/lambdas"),
             handler: "default_handler.lambda_handler"
         });
 
         this.sendRequestLambda = new Function(scope, 'SendEnrollmentRequestLambda', {
             runtime: Runtime.PYTHON_3_9,
-            code: Code.fromAsset("resources"),
+            code: Code.fromAsset("resources/lambdas"),
             handler: "send_request_handler.lambda_handler",
             environment: {
                 TOPIC_ARN: props.topic.topicArn
@@ -38,19 +38,19 @@ export class FibulaLambdas extends Construct {
 
         this.sendResponseLambda = new Function(scope, 'SendEnrollmentResponseLambda', {
             runtime: Runtime.PYTHON_3_9,
-            code: Code.fromAsset("resources"),
+            code: Code.fromAsset("resources/lambdas"),
             handler: "send_response_handler.lambda_handler"
         });
 
         this.requestStatusLambda = new Function(scope, 'RequestStatusLambda', {
             runtime: Runtime.PYTHON_3_9,
-            code: Code.fromAsset("resources"),
+            code: Code.fromAsset("resources/lambdas"),
             handler: "request_status_handler.lambda_handler"
         });
 
         this.getInstallerLambda = new Function(scope, 'GetInstallerLambda', {
             runtime: Runtime.PYTHON_3_9,
-            code: Code.fromAsset("resources"),
+            code: Code.fromAsset("resources/lambdas"),
             handler: "get_installer_handler.lambda_handler",
             environment: {
                 BUCKET_NAME: props.installerBucket.bucketName

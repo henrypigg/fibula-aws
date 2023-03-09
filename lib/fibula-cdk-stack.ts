@@ -6,6 +6,7 @@ import { Subscription, Topic } from 'aws-cdk-lib/aws-sns';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 import { LambdaIntegration, LambdaRestApi, RestApi } from 'aws-cdk-lib/aws-apigateway';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
+import { FibulaReactApp } from './fibula-react-app';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 
@@ -13,7 +14,8 @@ export class FibulaCdkStack extends cdk.Stack {
   readonly sendEnrollmentRequestTopic: Topic;
   readonly installerBucket: Bucket;
   readonly fibulaLambdas: FibulaLambdas;
-  readonly api: LambdaRestApi
+  readonly api: LambdaRestApi;
+  readonly reactApp: FibulaReactApp;
 
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
@@ -54,5 +56,9 @@ export class FibulaCdkStack extends cdk.Stack {
 
     const installer = this.api.root.addResource('installer');
     installer.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.getInstallerLambda));
+
+    // React App
+    this.reactApp = new FibulaReactApp(this, 'ReactApp');
+  
   }
 }
