@@ -45,6 +45,10 @@ export class FibulaCdkStack extends cdk.Stack {
     this.api = new LambdaRestApi(this, 'FibulaApi', {
       handler: this.fibulaLambdas.defaultLambda,
       proxy: false,
+      defaultCorsPreflightOptions: {
+        allowOrigins: ['*'],
+        allowMethods: ['GET'],
+      }
     });
 
     const enroll = this.api.root.addResource('enroll');
