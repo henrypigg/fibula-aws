@@ -15,8 +15,7 @@ function App() {
         }
       );
 
-      const data = await response.json();
-      setDownloadLink(data.downloadLink);
+      setDownloadLink(await response);
     } catch (error) {
       console.error(error);
     }
