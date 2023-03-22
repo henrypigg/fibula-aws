@@ -59,7 +59,7 @@ export class FibulaReactApp extends Construct {
   
       // Setup Bucket Deployment to automatically deploy new assets and invalidate cache
       new BucketDeployment(this, `fibulareactapp-s3bucketdeployment`, {
-        sources: [Source.asset("resources/fibula-react-app")],
+        sources: [Source.asset("resources/fibula-react-app/build")],
         destinationBucket: this.s3Site,
         distribution: this.distribution,
         distributionPaths: ["/*"],
