@@ -13,7 +13,16 @@ export class PipelineStack extends cdk.Stack {
                 input: CodePipelineSource.connection('henrypigg/fibula-aws', 'main', {
                        connectionArn: 'arn:aws:codestar-connections:us-east-1:374516698077:connection/20bdd642-8d2a-49ce-91e3-5caa0e02ef92', // Created using the AWS console
                     }),
-                commands: ['npm install', 'npm ci', 'npm run build', 'npx cdk synth'],
+                commands: [
+                    'npm install', 
+                    'cd resources/fibula-react-app', 
+                    'npm ci', 
+                    'npm run build', 
+                    'cd ../..', 
+                    'npm ci', 
+                    'npm run build', 
+                    'npx cdk synth'
+                ],
             })
         });
 
