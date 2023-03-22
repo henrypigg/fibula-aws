@@ -14,8 +14,9 @@ function App() {
           },
         }
       );
-
-      setDownloadLink(await response);
+      const data = await response;
+      console.log(data);
+      setDownloadLink(data);
     } catch (error) {
       console.error(error);
     }
