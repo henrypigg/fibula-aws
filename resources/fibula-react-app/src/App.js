@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
-  const [response, setResponse] = useState("");
+  const [downloadLink, setDownloadLink] = useState("");
 
-  const handleClick = async () => {
+  const getDownloadLink = async () => {
     try {
-      const result = await fetch(
+      const response = await fetch(
         "https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer",
         {
           method: "GET",
@@ -15,17 +15,24 @@ function App() {
         }
       );
 
-      const data = await result.json();
-      setResponse(JSON.stringify(data));
-    } catch (err) {
-      console.error(err);
+      const data = await response.json();
+      setDownloadLink(data.downloadLink);
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  useEffect(() => {
+    getDownloadLink();
+  }, []);
+
+  const handleDownload = () => {
+    window.open(downloadLink);
   };
 
   return (
     <div>
-      <button onClick={handleClick}>Hit API Gateway Endpoint</button>
-      <p>{response}</p>
+      <button onClick={handleDownload}>Hit API Gateway Endpoint</button>
     </div>
   );
 }

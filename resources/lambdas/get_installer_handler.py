@@ -8,14 +8,13 @@ def lambda_handler(event, context):
     s3 = boto3.client('s3')
 
     # Get all objects in the bucket
-    response = s3.list_objects_v2(Bucket=os.environ['BUCKET_NAME'], Delimiter='/')
+    response = s3.list_objects_v2(Bucket=os.environ['BUCKET_NAME'])
 
     # Paginate if necessary
     while response['IsTruncated']:
         response['Contents'].extend(
             s3.list_objects_v2(
-                Bucket=os.environ['BUCKET_NAME'], 
-                Delimiter='/', 
+                Bucket=os.environ['BUCKET_NAME'],
                 PaginationConfig={'StartingToken': response['NextToken']}
             )['Contents']
         )
