@@ -62,7 +62,8 @@ export class FibulaReactApp extends Construct {
         sources: [Source.asset("resources/fibula-react-app")],
         destinationBucket: this.s3Site,
         distribution: this.distribution,
-        distributionPaths: ["/*"]
+        distributionPaths: ["/*"],
+        memoryLimit: 4096
       });
       
       // Final CloudFront URL
