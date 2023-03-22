@@ -5,17 +5,10 @@ function App() {
 
   const getDownloadLink = async () => {
     try {
-      const response = await fetch(
-        "https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.url;
-      console.log(data);
+      const response = await fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer");
+      console.log(data)
+      const data = response.url;
+      console.log(await data);
       setDownloadLink(data);
     } catch (error) {
       console.error(error);
