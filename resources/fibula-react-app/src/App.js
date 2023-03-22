@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
 
 function App() {
   const [downloadLink, setDownloadLink] = useState("");
@@ -23,8 +24,8 @@ function App() {
   };
 
   return (
-    <div>
-      <button onClick={handleDownload}>Hit API Gateway Endpoint</button>
+    <div class="page">
+      <Button variant="contained" disabled={downloadLink === ""} onClick={handleDownload}>Download MacOS Installer</Button>
     </div>
   );
 }
