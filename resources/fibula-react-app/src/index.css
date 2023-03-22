@@ -12,10 +12,20 @@ code {
     monospace;
 }
 
-.page {
+.macbutton {
   height: 100%;
   width: 100%;
   padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.windowsbutton {
+  height: 100%;
+  width: 100%;
+  padding-bottom: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
