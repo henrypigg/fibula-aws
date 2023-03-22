@@ -10,10 +10,10 @@ export class FibulaReactApp extends Construct {
 
     constructor(scope: Construct, id: string) {
       super(scope, id);
-  
+
       // Add S3 Bucket
       this.s3Site = new Bucket(this, 'FibulaReactApp', {
-        bucketName: `myreactapp-s3bucket`,
+        bucketName: `fibulareactapp-bucket`,
         publicReadAccess: true,
         websiteIndexDocument: "index.html",
         websiteErrorDocument: "index.html"
@@ -23,7 +23,7 @@ export class FibulaReactApp extends Construct {
       // Create a new CloudFront Distribution
       this.distribution = new CloudFrontWebDistribution(
         this,
-        `myreactapp-cf-distribution`,
+        `fibulareactapp-cf-distribution`,
         {
           originConfigs: [
             {
