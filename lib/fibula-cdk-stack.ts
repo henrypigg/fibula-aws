@@ -4,7 +4,7 @@ import { FibulaLambdas } from './fibula-lambdas';
 import {aws_s3 as s3} from 'aws-cdk-lib'
 import { Subscription, Topic } from 'aws-cdk-lib/aws-sns';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
-import { LambdaIntegration, LambdaRestApi, RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { LambdaIntegration, LambdaRestApi, RestApi, Cors } from 'aws-cdk-lib/aws-apigateway';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { FibulaReactApp } from './fibula-react-app';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
@@ -40,14 +40,18 @@ export class FibulaCdkStack extends cdk.Stack {
       topic: this.sendEnrollmentRequestTopic,
       installerBucket: this.installerBucket
     });
-    
+
+    // React App
+    this.reactApp = new FibulaReactApp(this, 'ReactApp');
+
     // API
     this.api = new LambdaRestApi(this, 'FibulaApi', {
       handler: this.fibulaLambdas.defaultLambda,
       proxy: false,
       defaultCorsPreflightOptions: {
-        allowOrigins: ['*'],
+        allowOrigins: [this.reactApp.distribution.distributionDomainName],
         allowMethods: ['GET'],
+        allowHeaders: Cors.DEFAULT_HEADERS
       }
     });
 
@@ -61,8 +65,5 @@ export class FibulaCdkStack extends cdk.Stack {
     const installer = this.api.root.addResource('installer');
     installer.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.getInstallerLambda));
 
-    // React App
-    this.reactApp = new FibulaReactApp(this, 'ReactApp');
-  
   }
 }
