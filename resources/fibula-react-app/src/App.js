@@ -14,7 +14,7 @@ function App() {
           },
         }
       );
-      const data = await response;
+      const data = await response.url;
       console.log(data);
       setDownloadLink(data);
     } catch (error) {
