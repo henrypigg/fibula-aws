@@ -62,7 +62,7 @@ export class FibulaCdkStack extends cdk.Stack {
     installer.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.getInstallerLambda));
 
     // React App
-    //this.reactApp = new FibulaReactApp(this, 'ReactApp');
+    this.reactApp = new FibulaReactApp(this, 'ReactApp');
   
   }
 }
