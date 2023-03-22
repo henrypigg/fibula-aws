@@ -4,7 +4,7 @@ import { FibulaLambdas } from './fibula-lambdas';
 import {aws_s3 as s3} from 'aws-cdk-lib'
 import { Subscription, Topic } from 'aws-cdk-lib/aws-sns';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
-import { LambdaIntegration, LambdaRestApi, RestApi, Cors } from 'aws-cdk-lib/aws-apigateway';
+import { LambdaIntegration, LambdaRestApi, AuthorizationType, Cors, PassthroughBehavior } from 'aws-cdk-lib/aws-apigateway';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { FibulaReactApp } from './fibula-react-app';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
@@ -63,7 +63,34 @@ export class FibulaCdkStack extends cdk.Stack {
     requestId.addMethod('PUT', new LambdaIntegration(this.fibulaLambdas.sendResponseLambda));
 
     const installer = this.api.root.addResource('installer');
-    installer.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.getInstallerLambda));
+    const installerLambdaIntegration = new LambdaIntegration(this.fibulaLambdas.getInstallerLambda, {
+      integrationResponses: [
+        {
+          statusCode: '200',
+          responseParameters: {
+            'method.response.header.Access-Control-Allow-Origin': `${this.reactApp.distribution.distributionDomainName}`,
+            'method.response.header.Acces-Control-Allow-Credentials': `'true'`,
+          }
+        }
+      ],
+      passthroughBehavior: PassthroughBehavior.NEVER,
+      requestTemplates: {
+        'application/json': '{"statusCode": 200}'
+      }
+    });
+
+    installer.addMethod('GET', installerLambdaIntegration, {
+      authorizationType: AuthorizationType.NONE,
+      methodResponses: [
+        {
+          statusCode: '200',
+          responseParameters: {
+            'method.response.header.Access-Control-Allow-Origin': true,
+            'method.response.header.Access-Control-Allow-Credentials': true,
+          }
+        }
+      ]
+    });
 
   }
 }
