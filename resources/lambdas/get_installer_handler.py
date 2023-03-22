@@ -27,6 +27,11 @@ def lambda_handler(event, context):
         # return presigned url for 12 hours
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
             'body': s3.generate_presigned_url(
                 ClientMethod='get_object',
                 Params={
@@ -39,5 +44,10 @@ def lambda_handler(event, context):
 
     return {
         'statusCode': 404,
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET',
+            'Access-Control-Allow-Headers': 'Content-Type',
+        },
         'body': 'No versions found.'
     }
