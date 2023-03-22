@@ -6,9 +6,8 @@ function App() {
   const getDownloadLink = async () => {
     try {
       const response = await fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer");
-      console.log(data)
-      const data = response.url;
-      console.log(await data);
+      const data = await response.text();
+      console.log(data);
       setDownloadLink(data);
     } catch (error) {
       console.error(error);
