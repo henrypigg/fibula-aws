@@ -49,7 +49,7 @@ export class FibulaCdkStack extends cdk.Stack {
       handler: this.fibulaLambdas.defaultLambda,
       proxy: false,
       defaultCorsPreflightOptions: {
-        allowOrigins: [this.reactApp.distribution.distributionDomainName],
+        allowOrigins: Cors.ALL_ORIGINS,
         allowMethods: ['GET'],
         allowHeaders: Cors.DEFAULT_HEADERS
       }
@@ -64,7 +64,7 @@ export class FibulaCdkStack extends cdk.Stack {
 
     const installer = this.api.root.addResource('installer', {
       defaultCorsPreflightOptions: {
-        allowOrigins: [this.reactApp.distribution.distributionDomainName],
+        allowOrigins: Cors.ALL_ORIGINS,
         allowMethods: ['GET'],
         allowHeaders: Cors.DEFAULT_HEADERS
       }
