@@ -2,27 +2,33 @@ import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 
 function App() {
-    const [downloadLink, setDownloadLink] = useState("");
+    const [macLink, setMacLink] = useState("");
+    const [winLink, setWinLink] = useState("");
 
-    const getDownloadLink = async () => {
+    const getDownloadLinks = async () => {
         try {
-            const response = await fetch(
-                "https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer"
-            );
-            const data = await response.text();
-            console.log(data);
-            setDownloadLink(data);
+            const macResponse = await fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer/macos");
+            const macLink = await macResponse.text();
+            const winResponse = await fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer/windows");
+            const winLink = await winResponse.text();
+            
+            setMacLink(macLink);
+            setWinLink(winLink);
         } catch (error) {
             console.error(error);
         }
     };
 
     useEffect(() => {
-        getDownloadLink();
+        getDownloadLinks();
     }, []);
 
-    const handleDownload = () => {
-        window.open(downloadLink);
+    const handleMacDownload = () => {
+        window.open(macLink);
+    };
+
+    const handleWinDownload = () => {
+        window.open(winLink);
     };
 
     return (
@@ -165,8 +171,8 @@ function App() {
                     <center class="macbutton">
                         <Button
                             variant="contained"
-                            disabled={downloadLink === ""}
-                            onClick={handleDownload}
+                            disabled={macLink === ""}
+                            onClick={handleMacDownload}
                             color="primary"
                         >
                             Download MacOS Installer
@@ -177,8 +183,8 @@ function App() {
                     <center class="windowsbutton">
                         <Button
                             variant="contained"
-                            disabled={downloadLink === ""}
-                            onClick={handleDownload}
+                            disabled={winLink === ""}
+                            onClick={handleWinDownload}
                         >
                             Download Windows Installer
                         </Button>

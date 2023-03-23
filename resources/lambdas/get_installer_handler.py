@@ -2,11 +2,11 @@ import os
 import boto3
 
 # Get the latest installer version from s3
-# The versions are stored with the key format: {version}/femr-x64-{version}.pkg
+# The versions are stored with the key format: {platform}/{version}/{installer}.{pkg/exe}
 
 def lambda_handler(event, context):
     s3 = boto3.client('s3')
-
+    print(event)
     # Get all objects in the bucket
     response = s3.list_objects_v2(Bucket=os.environ['BUCKET_NAME'])
 
