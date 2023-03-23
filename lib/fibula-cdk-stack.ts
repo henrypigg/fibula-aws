@@ -62,8 +62,20 @@ export class FibulaCdkStack extends cdk.Stack {
     requestId.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.requestStatusLambda));
     requestId.addMethod('PUT', new LambdaIntegration(this.fibulaLambdas.sendResponseLambda));
 
-    const installer = this.api.root.addResource('installer');
-    const platform = installer.addResource('{platform}');
+    const installer = this.api.root.addResource('installer', {
+      defaultCorsPreflightOptions: {
+        allowOrigins: Cors.ALL_ORIGINS,
+        allowMethods: ['GET'],
+        allowHeaders: Cors.DEFAULT_HEADERS
+      }
+    });
+    const platform = installer.addResource('{platform}', {
+      defaultCorsPreflightOptions: {
+        allowOrigins: Cors.ALL_ORIGINS,
+        allowMethods: ['GET'],
+        allowHeaders: Cors.DEFAULT_HEADERS
+      }
+    });
     platform.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.getInstallerLambda));
 
   }
