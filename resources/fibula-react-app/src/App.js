@@ -7,11 +7,15 @@ function App() {
 
     const getDownloadLinks = async () => {
         try {
-            const macResponse = await fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer/macos");
+            const macResponse = await fetch(
+                "https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer/macos"
+            );
             const macLink = await macResponse.text();
-            const winResponse = await fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer/windows");
+            const winResponse = await fetch(
+                "https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/installer/windows"
+            );
             const winLink = await winResponse.text();
-            
+
             setMacLink(macLink);
             setWinLink(winLink);
         } catch (error) {
@@ -75,15 +79,27 @@ function App() {
                             </b>{" "}
                         </p>
                     </center>
-                    <center>
-                        <pre>
-                            &nbsp;&nbsp;&nbsp;&nbsp;Go to DOWNLOAD_LINK.COM and
-                            download the installer, being careful of whether
-                            <br></br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;you have Apple Silicon or
-                            Intel architecture.<br></br>
-                            <br></br>
-                        </pre>
+                    <center class="installButtons">
+                        <div class="macButton">
+                            <Button
+                                variant="contained"
+                                disabled={macLink === ""}
+                                onClick={handleMacDownload}
+                                color="primary"
+                                textTransform="none"
+                            >
+                                Mac
+                            </Button>
+                        </div>
+                        <div class="windowsButton">
+                            <Button
+                                variant="contained"
+                                disabled={winLink === ""}
+                                onClick={handleWinDownload}
+                            >
+                                Windows
+                            </Button>
+                        </div>
                     </center>
                     <center>
                         <p>
@@ -165,29 +181,6 @@ function App() {
                             &nbsp;&nbsp;&nbsp;&nbsp;login page, success!
                             <br></br>
                         </pre>
-                    </center>
-                </div>
-                <div>
-                    <center class="macbutton">
-                        <Button
-                            variant="contained"
-                            disabled={macLink === ""}
-                            onClick={handleMacDownload}
-                            color="primary"
-                        >
-                            Download MacOS Installer
-                        </Button>
-                    </center>
-                </div>
-                <div>
-                    <center class="windowsbutton">
-                        <Button
-                            variant="contained"
-                            disabled={winLink === ""}
-                            onClick={handleWinDownload}
-                        >
-                            Download Windows Installer
-                        </Button>
                     </center>
                 </div>
             </body>

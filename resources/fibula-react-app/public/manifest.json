@@ -1,5 +1,5 @@
 {
-  "short_name": "React App",
+  "short_name": "Install fEMR Off-Chain",
   "name": "Create React App Sample",
   "icons": [
     {
@@ -8,9 +8,9 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logo_color.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "400x200"
     },
     {
       "src": "logo512.png",
