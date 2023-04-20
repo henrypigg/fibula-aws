@@ -63,8 +63,8 @@ function App() {
                             &nbsp;&nbsp;&nbsp;&nbsp;any step of this process and
                             while the FEMR system is being used.<br></br>
                             <br></br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;Go to
-                            https://www.docker.com/products/docker-desktop/ and
+                            &nbsp;&nbsp;&nbsp;&nbsp;Go to&nbsp;
+                            <a href="https://www.docker.com/products/docker-desktop/" target="_blank">https://www.docker.com/products/docker-desktop/</a> and
                             download the release for your computer.<br></br>
                             &nbsp;&nbsp;&nbsp;&nbsp;Open the downloaded dmg and
                             drag the Docker application the Applications folder.
@@ -176,7 +176,7 @@ function App() {
                     <center>
                         <pre>
                             &nbsp;&nbsp;&nbsp;&nbsp;Open a browser window and
-                            navigate to https://localhost:9000 if you see the
+                            navigate to <a href="https://localhost:9000" target="_blank">https://localhost:9000</a> if you see the
                             FEMR<br></br>
                             &nbsp;&nbsp;&nbsp;&nbsp;login page, success!
                             <br></br>
