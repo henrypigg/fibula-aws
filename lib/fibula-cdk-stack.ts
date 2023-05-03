@@ -55,7 +55,13 @@ export class FibulaCdkStack extends cdk.Stack {
       }
     });
 
-    const enroll = this.api.root.addResource('enroll');
+    const enroll = this.api.root.addResource('enroll', {
+      defaultCorsPreflightOptions: {
+        allowOrigins: Cors.ALL_ORIGINS,
+        allowMethods: ['GET'],
+        allowHeaders: Cors.DEFAULT_HEADERS
+      }
+    });
     enroll.addMethod('PUT', new LambdaIntegration(this.fibulaLambdas.sendRequestLambda));
 
     const requestId = enroll.addResource('{requestId}');
