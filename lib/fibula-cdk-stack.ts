@@ -20,6 +20,9 @@ export class FibulaCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
 
+    // React App
+    this.reactApp = new FibulaReactApp(this, 'ReactApp');
+
     // SNS Topic
     this.sendEnrollmentRequestTopic = new Topic(this, 'SendEnrollmentRequestTopic', {
       displayName: 'Send enrollment request email',
@@ -38,11 +41,9 @@ export class FibulaCdkStack extends cdk.Stack {
     // Lambdas
     this.fibulaLambdas = new FibulaLambdas(this, 'Lambdas', {
       topic: this.sendEnrollmentRequestTopic,
-      installerBucket: this.installerBucket
+      installerBucket: this.installerBucket,
+      domainName: this.reactApp.distribution.distributionDomainName
     });
-
-    // React App
-    this.reactApp = new FibulaReactApp(this, 'ReactApp');
 
     // API
     this.api = new LambdaRestApi(this, 'FibulaApi', {

@@ -9,6 +9,7 @@ import { Bucket } from 'aws-cdk-lib/aws-s3';
 interface FibulaLambdasProps {
     topic: Topic;
     installerBucket: Bucket;
+    domainName: string;
 }
 
 export class FibulaLambdas extends Construct {
@@ -32,7 +33,8 @@ export class FibulaLambdas extends Construct {
             code: Code.fromAsset("resources/lambdas"),
             handler: "send_request_handler.lambda_handler",
             environment: {
-                TOPIC_ARN: props.topic.topicArn
+                TOPIC_ARN: props.topic.topicArn,
+                DOMAIN_NAME: props.
             }
         });
 

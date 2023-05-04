@@ -18,7 +18,7 @@ function ContactForm() {
         {
             method: "PUT",
             body: JSON.stringify({
-                website: name,
+                name: name,
                 email: email,
                 organization: organization,
                 message: message,
