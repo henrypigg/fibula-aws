@@ -58,7 +58,7 @@ export class FibulaCdkStack extends cdk.Stack {
     const enroll = this.api.root.addResource('enroll', {
       defaultCorsPreflightOptions: {
         allowOrigins: Cors.ALL_ORIGINS,
-        allowMethods: ['GET'],
+        allowMethods: ['GET', 'PUT'],
         allowHeaders: Cors.DEFAULT_HEADERS
       }
     });
