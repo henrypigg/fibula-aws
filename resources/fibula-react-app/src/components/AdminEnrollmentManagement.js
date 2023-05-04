@@ -17,10 +17,12 @@ function AdminEnrollmentManagement() {
 
     return (
         <div>
-            <h1>Admin Enrollment Management</h1>
-            <p>Enrollment Request email: {email}</p>
-            <Button variant="contained" color="primary">Approve</Button>
-            <Button variant="contained" color="secondary">Deny</Button>
+            <center>
+                <h1>Admin Enrollment Management</h1>
+                <p>Enrollment Request Email: {email}</p>
+                <Button variant="contained" color="primary">Approve</Button>
+                <Button variant="contained" color="secondary">Deny</Button>
+            </center>
         </div>
     );
 }
