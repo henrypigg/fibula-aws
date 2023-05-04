@@ -53,7 +53,13 @@ export class FibulaReactApp extends Construct {
             }
           ],
           comment: `fibulareactapp - CloudFront Distribution`,
-          viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS
+          viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          errorConfigurations: [{
+            errorCachingMinTtl: 60,
+            errorCode: 403,
+            responseCode: 200,
+            responsePagePath: "/index.html" 
+          }]
         }
       );
   
