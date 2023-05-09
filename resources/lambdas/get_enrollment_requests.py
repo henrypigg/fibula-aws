@@ -1,6 +1,5 @@
 import logging
 import requests
-import json
 
 def lambda_handler(event, context):
     # Get enrollment request status from FEMR central database
@@ -12,5 +11,10 @@ def lambda_handler(event, context):
 
     return {
         'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET',
+            'Access-Control-Allow-Headers': 'Content-Type',
+        },
         'body': response.text
     }
