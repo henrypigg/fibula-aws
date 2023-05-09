@@ -23,8 +23,9 @@ export class PipelineStack extends cdk.Stack {
                     'npm ci', 
                     'npm run build', 
                     'npx cdk synth'
-                ],
-            })
+                ]
+            }),
+            dockerEnabledForSynth: true
         });
 
         pipeline.addStage(new FemrProdStage(this, "Prod", {
