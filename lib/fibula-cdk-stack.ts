@@ -64,9 +64,9 @@ export class FibulaCdkStack extends cdk.Stack {
       }
     });
     enroll.addMethod('PUT', new LambdaIntegration(this.fibulaLambdas.sendRequestLambda));
+    enroll.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.getEnrollmentRequestsLambda));
 
     const requestId = enroll.addResource('{requestId}');
-    requestId.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.requestStatusLambda));
     requestId.addMethod('PUT', new LambdaIntegration(this.fibulaLambdas.sendResponseLambda));
 
     const installer = this.api.root.addResource('installer', {

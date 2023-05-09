@@ -16,7 +16,7 @@ export class FibulaLambdas extends Construct {
     readonly defaultLambda: Function;
     readonly sendRequestLambda: Function;
     readonly sendResponseLambda: Function;
-    readonly requestStatusLambda: Function;
+    readonly getEnrollmentRequestsLambda: Function;
     readonly getInstallerLambda: Function;
 
     constructor(scope: Construct, id: string, props: FibulaLambdasProps) {
@@ -44,10 +44,10 @@ export class FibulaLambdas extends Construct {
             handler: "send_response_handler.lambda_handler"
         });
 
-        this.requestStatusLambda = new Function(scope, 'RequestStatusLambda', {
+        this.getEnrollmentRequestsLambda = new Function(scope, 'RequestStatusLambda', {
             runtime: Runtime.PYTHON_3_9,
             code: Code.fromAsset("resources/lambdas"),
-            handler: "request_status_handler.lambda_handler"
+            handler: "get_enrollment_requests.lambda_handler"
         });
 
         this.getInstallerLambda = new Function(scope, 'GetInstallerLambda', {
