@@ -30,15 +30,7 @@ export class FibulaLambdas extends Construct {
 
         this.sendRequestLambda = new Function(scope, 'SendEnrollmentRequestLambda', {
             runtime: Runtime.PYTHON_3_9,
-            code: Code.fromAsset("resources/lambdas", {
-                bundling: {
-                    image: Runtime.PYTHON_3_9.bundlingImage,
-                    command: [
-                    'bash', '-c',
-                    'pip install -r requirements.txt -t /asset-output && cp -au . /asset-output'
-                    ],
-                },
-            }),
+            code: Code.fromAsset("resources/lambdas"),
             handler: "send_request_handler.lambda_handler",
             environment: {
                 TOPIC_ARN: props.topic.topicArn
@@ -52,15 +44,7 @@ export class FibulaLambdas extends Construct {
         });
 
         this.getEnrollmentRequestsLambdas = new Function(this, 'Function', {
-            code: Code.fromAsset("resources/lambdas", {
-              bundling: {
-                image: Runtime.PYTHON_3_9.bundlingImage,
-                command: [
-                  'bash', '-c',
-                  'pip install -r requirements.txt -t /asset-output && cp -au . /asset-output'
-                ],
-              },
-            }),
+            code: Code.fromAsset("resources/lambdas"),
             runtime: Runtime.PYTHON_3_9,
             handler: 'get_enrollment_requests.lambda_handler',
           });
