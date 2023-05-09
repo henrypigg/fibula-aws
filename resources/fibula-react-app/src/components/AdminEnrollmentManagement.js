@@ -43,11 +43,13 @@ function AdminEnrollmentManagement() {
       };
 
     useEffect(() => {
-        fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/enroll")
-            .then((response) => console.log(response))
+        const fetchData = async () => {
+            await fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/enroll")
             .then((response) => response.json())
             .then((data) => setData(data))
-            .then((data) => console.log(data))
+        }
+
+        fetchData()
             .catch((error) => console.error(error));
     }, []);
 
