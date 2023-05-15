@@ -7,7 +7,8 @@ import { Bucket } from 'aws-cdk-lib/aws-s3';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 interface FibulaLambdasProps {
-    topic: Topic;
+    requestTopic: Topic;
+    responseTopic: Topic;
     installerBucket: Bucket;
     domainName: string;
 }
@@ -41,7 +42,8 @@ export class FibulaLambdas extends Construct {
             }),
             handler: "send_request_handler.lambda_handler",
             environment: {
-                TOPIC_ARN: props.topic.topicArn,
+                REQUEST_TOPIC_ARN: props.requestTopic.topicArn,
+                RESPONSE_TOPIC_ARN: props.responseTopic.topicArn,
                 DOMAIN_NAME: props.domainName
             }
         });

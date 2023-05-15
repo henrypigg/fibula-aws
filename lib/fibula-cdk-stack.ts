@@ -37,6 +37,11 @@ export class FibulaStack extends cdk.Stack {
       new EmailSubscription('henry.pigg@gmail.com')
     )
 
+    this.sendEnrollmentResponseTopic = new Topic(this, 'SendEnrollmentResponseTopic', {
+      displayName: 'Send enrollment response email',
+      topicName: 'send-enrollment-response'
+    })
+
     // S3 Bucket
     this.installerBucket = new Bucket(this, 'InstallerBucket', {
       bucketName: 'fibula-installer'
@@ -44,7 +49,8 @@ export class FibulaStack extends cdk.Stack {
 
     // Lambdas
     this.fibulaLambdas = new FibulaLambdas(this, 'Lambdas', {
-      topic: this.sendEnrollmentRequestTopic,
+      requestTopic: this.sendEnrollmentRequestTopic,
+      responseTopic: this.sendEnrollmentResponseTopic,
       installerBucket: this.installerBucket,
       domainName: this.reactApp.distribution.distributionDomainName
     });

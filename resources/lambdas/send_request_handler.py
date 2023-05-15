@@ -45,6 +45,23 @@ def register_request(event_body):
     logging.info(f"Received response from fEMR central database: {response}")
 
 
+def subscribe_to_response_topic(sns_client, email):
+    filter_policy = {
+        "email": email
+    }
+
+    response = sns_client.subscribe(
+        TopicArn=os.environ["RESPONSE_TOPIC_ARN"],
+        Protocol='email',
+        Endpoint=email,
+        Attributes={
+            'FilterPolicy': json.dumps(filter_policy)
+        }
+    )
+
+    logging.info(f"Subscribed {email} to fEMR enrollment topic: {response}")
+
+
 def lambda_handler(event, context):
     logging.info(f"Received event: {event}")
 
@@ -54,11 +71,13 @@ def lambda_handler(event, context):
     
     client = boto3.client('sns')
     response = client.publish(
-        TargetArn=os.environ["TOPIC_ARN"],
+        TargetArn=os.environ["REQUEST_TOPIC_ARN"],
         Subject='fEMR Enrollment Request',
         Message=format_enrollment_request(event_body),
         MessageStructure='string'
     )
+
+    subscribe_to_response_topic(client, event_body.get("email"))
 
     return {
         'statusCode': 200,

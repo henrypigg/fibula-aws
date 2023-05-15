@@ -44,7 +44,7 @@ function AdminEnrollmentManagement() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/enroll")
+            await fetch("https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll")
             .then((response) => response.json())
             .then((data) => setData(data))
         }

@@ -14,7 +14,7 @@ function ContactForm() {
     event.preventDefault();
     console.log(`First Name: ${firstName}\nLast Name: ${lastName}\nEmail: ${email}\nOrganization: ${organization}\nMessage: ${message}`);
     // You can replace the console.log with your desired submit logic
-    await fetch("https://n7cb2loyv3.execute-api.us-east-1.amazonaws.com/prod/enroll", {
+    await fetch("https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll", {
         method: "PUT",
         body: JSON.stringify({
             first_name: firstName,
