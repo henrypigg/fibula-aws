@@ -1,4 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
+import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Function } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { Runtime, Code } from 'aws-cdk-lib/aws-lambda'
@@ -79,6 +80,10 @@ export class FibulaLambdas extends Construct {
 
         props.requestTopic.grantPublish(this.sendRequestLambda);
         props.responseTopic.grantPublish(this.sendResponseLambda);
+        this.sendResponseLambda.addToRolePolicy(new PolicyStatement({
+            actions: ['sns:Subscribe'],
+            resources: [props.responseTopic.topicArn]
+        }));
         props.installerBucket.grantRead(this.getInstallerLambda);
   }
 }
