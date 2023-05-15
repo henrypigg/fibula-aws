@@ -19,7 +19,7 @@ function AdminEnrollmentManagement() {
         console.log('Denying enrollment request for ' + row.email);
     }
 
-    const ExpandableTableRow = ({ children, expandComponent, ...otherProps }) => {
+    const ExpandableTableRow = ({ rowEmail, children, expandComponent, ...otherProps }) => {
         const [isExpanded, setIsExpanded] = React.useState(false);
       
         return (
@@ -27,7 +27,7 @@ function AdminEnrollmentManagement() {
             <TableRow {...otherProps}>
               <TableCell padding="checkbox">
                 <IconButton onClick={() => setIsExpanded(!isExpanded)}>
-                  {isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                  {isExpanded || email === rowEmail ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                 </IconButton>
               </TableCell>
               {children}
@@ -73,6 +73,7 @@ function AdminEnrollmentManagement() {
                     <TableBody>
                     {data.map((row) => (
                         <ExpandableTableRow
+                        email={row.email}
                         key={row.requestid}
                         expandComponent={<TableCell colSpan="5">{row.message}</TableCell>}
                         >
