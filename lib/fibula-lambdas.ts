@@ -41,7 +41,8 @@ export class FibulaLambdas extends Construct {
             }),
             handler: "send_request_handler.lambda_handler",
             environment: {
-                TOPIC_ARN: props.topic.topicArn
+                TOPIC_ARN: props.topic.topicArn,
+                DOMAIN_NAME: props.domainName
             }
         });
 

@@ -1,14 +1,25 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from "constructs";
-import { FibulaCdkStack } from './fibula-cdk-stack';
+import { FibulaStack } from './fibula-cdk-stack';
 
-export class FemrProdStage extends cdk.Stage {
+export enum LogicalStage {
+    DEV = 'dev',
+    PROD = 'prod'
+}
+
+export interface FemrStageProps extends cdk.StageProps {
+    logicalStage: LogicalStage
+}
+
+export class FemrStage extends cdk.Stage {
+    readonly fibulaStack: FibulaStack;
      
-    constructor(scope: Construct, id: string, props: cdk.StageProps) {
+    constructor(scope: Construct, id: string, props: FemrStageProps) {
         super(scope, id, props);
   
-        const fibulaStack = new FibulaCdkStack(this, 'FibulaStack', {
-            env: props.env
+        this.fibulaStack = new FibulaStack(this, 'FibulaStack', {
+            env: props.env,
+            logicalStage: props.logicalStage
         });
     }
 }

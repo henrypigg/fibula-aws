@@ -40,7 +40,7 @@ function AdminEnrollmentManagement() {
             )}
           </>
         );
-      };
+    };
 
     useEffect(() => {
         const fetchData = async () => {

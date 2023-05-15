@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { FibulaCdkStack } from '../lib/fibula-cdk-stack';
 import { PipelineStack } from '../lib/pipeline-stack';
 
 const app = new cdk.App();

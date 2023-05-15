@@ -1,23 +1,27 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { FibulaLambdas } from './fibula-lambdas';
-import {aws_s3 as s3} from 'aws-cdk-lib'
-import { Subscription, Topic } from 'aws-cdk-lib/aws-sns';
+import { Topic } from 'aws-cdk-lib/aws-sns';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
-import { LambdaIntegration, LambdaRestApi, RestApi, Cors } from 'aws-cdk-lib/aws-apigateway';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { FibulaReactApp } from './fibula-react-app';
+import { FibulaApi } from './fibula-api';
+import { LogicalStage } from './femr-prod-stage';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
+interface FibulaStackProps extends cdk.StackProps {
+  logicalStage: LogicalStage
+}
 
-export class FibulaCdkStack extends cdk.Stack {
+export class FibulaStack extends cdk.Stack {
   readonly sendEnrollmentRequestTopic: Topic;
+  readonly sendEnrollmentResponseTopic: Topic;
   readonly installerBucket: Bucket;
   readonly fibulaLambdas: FibulaLambdas;
-  readonly api: LambdaRestApi;
+  readonly api: FibulaApi;
   readonly reactApp: FibulaReactApp;
 
-  constructor(scope: Construct, id: string, props: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: FibulaStackProps) {
     super(scope, id, props);
 
     // React App
@@ -46,44 +50,9 @@ export class FibulaCdkStack extends cdk.Stack {
     });
 
     // API
-    this.api = new LambdaRestApi(this, 'FibulaApi', {
-      handler: this.fibulaLambdas.defaultLambda,
-      proxy: false,
-      defaultCorsPreflightOptions: {
-        allowOrigins: Cors.ALL_ORIGINS,
-        allowMethods: ['GET'],
-        allowHeaders: Cors.DEFAULT_HEADERS
-      }
+    this.api = new FibulaApi(this, 'FibulaApi', {
+      fibulaLambdas: this.fibulaLambdas
     });
-
-    const enroll = this.api.root.addResource('enroll', {
-      defaultCorsPreflightOptions: {
-        allowOrigins: Cors.ALL_ORIGINS,
-        allowMethods: ['GET', 'PUT'],
-        allowHeaders: Cors.DEFAULT_HEADERS
-      }
-    });
-    enroll.addMethod('PUT', new LambdaIntegration(this.fibulaLambdas.sendRequestLambda));
-    enroll.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.getEnrollmentRequestsLambdas));
-
-    const requestId = enroll.addResource('{requestId}');
-    requestId.addMethod('PUT', new LambdaIntegration(this.fibulaLambdas.sendResponseLambda));
-
-    const installer = this.api.root.addResource('installer', {
-      defaultCorsPreflightOptions: {
-        allowOrigins: Cors.ALL_ORIGINS,
-        allowMethods: ['GET'],
-        allowHeaders: Cors.DEFAULT_HEADERS
-      }
-    });
-    const platform = installer.addResource('{platform}', {
-      defaultCorsPreflightOptions: {
-        allowOrigins: Cors.ALL_ORIGINS,
-        allowMethods: ['GET'],
-        allowHeaders: Cors.DEFAULT_HEADERS
-      }
-    });
-    platform.addMethod('GET', new LambdaIntegration(this.fibulaLambdas.getInstallerLambda));
 
   }
 }
