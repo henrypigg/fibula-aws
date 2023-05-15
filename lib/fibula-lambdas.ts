@@ -77,7 +77,8 @@ export class FibulaLambdas extends Construct {
             }
         });
 
-        props.topic.grantPublish(this.sendRequestLambda);
+        props.requestTopic.grantPublish(this.sendRequestLambda);
+        props.responseTopic.grantPublish(this.sendResponseLambda);
         props.installerBucket.grantRead(this.getInstallerLambda);
   }
 }
