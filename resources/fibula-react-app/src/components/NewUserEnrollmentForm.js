@@ -35,6 +35,7 @@ function ContactForm() {
 
   return (
     <div>
+      <center>
         <h1>New User Enrollment Form</h1>
         <FormControl>
             <FormLabel>First Name</FormLabel>
@@ -46,9 +47,10 @@ function ContactForm() {
             <FormLabel>Organization</FormLabel>
             <TextField type="text" onChange={(organization) => setOrganization(organization.target.value)}></TextField>
             <FormLabel>Message</FormLabel>
-            <TextField type="text" onChange={(message) => setMessage(message.target.value)}></TextField>
+            <TextField id="outlined-multiline-flexible" multiline maxRows={4} type="text" onChange={(message) => setMessage(message.target.value)}></TextField>
             <Button onClick={handleSubmit}>Submit</Button>
         </FormControl>
+      </center>
     </div>
   );
 }
