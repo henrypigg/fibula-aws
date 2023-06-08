@@ -51,7 +51,15 @@ export class FibulaLambdas extends Construct {
 
         this.sendResponseLambda = new Function(scope, 'SendEnrollmentResponseLambda', {
             runtime: Runtime.PYTHON_3_9,
-            code: Code.fromAsset("resources/lambdas"),
+            code: Code.fromAsset("resources/lambdas", {
+                bundling: {
+                    image: Runtime.PYTHON_3_9.bundlingImage,
+                    command: [
+                    'bash', '-c',
+                    'pip install -r requirements.txt -t /asset-output && cp -au . /asset-output'
+                    ],
+                },
+            }),
             handler: "send_response_handler.lambda_handler"
         });
 
