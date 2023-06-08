@@ -33,7 +33,13 @@ export class FibulaApi extends Construct {
         enroll.addMethod('PUT', new LambdaIntegration(props.fibulaLambdas.sendRequestLambda));
         enroll.addMethod('GET', new LambdaIntegration(props.fibulaLambdas.getEnrollmentRequestsLambdas));
     
-        const requestId = enroll.addResource('{requestId}');
+        const requestId = enroll.addResource('{requestId}', {
+            defaultCorsPreflightOptions: {
+                allowOrigins: Cors.ALL_ORIGINS,
+                allowMethods: ['GET'],
+                allowHeaders: Cors.DEFAULT_HEADERS
+            }
+        });
         requestId.addMethod('PUT', new LambdaIntegration(props.fibulaLambdas.sendResponseLambda));
     
         const installer = this.api.root.addResource('installer', {

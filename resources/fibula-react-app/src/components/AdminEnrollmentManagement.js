@@ -10,13 +10,32 @@ function AdminEnrollmentManagement() {
 
     const email = searchParams.get('email');
 
-    const handleApprove = (row) => {
-        console.log(data)
-        console.log('Approving enrollment request for ' + row.email);
+    const handleApprove = async (row) => {
+      console.log('Denying enrollment request for ' + row.email);
+
+      await fetch(`https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll/${row.request_id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+            response: "Approved"
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
     }
 
-    const handleDeny = (row) => {
-        console.log('Denying enrollment request for ' + row.email);
+    const handleDeny = async (row) => {
+      console.log('Denying enrollment request for ' + row.email);
+
+      await fetch(`https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll/${row.request_id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+            response: "Denied"
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
     }
 
     const ExpandableTableRow = ({ rowEmail, children, expandComponent, ...otherProps }) => {

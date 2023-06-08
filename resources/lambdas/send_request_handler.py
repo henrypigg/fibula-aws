@@ -20,11 +20,11 @@ def format_enrollment_request(event_body):
 
 
 def register_request(event_body):
-    enrollment_requests = json.loads(requests.get("http://skelechaingang-env.eba-i65amzvv.us-west-2.elasticbeanstalk.com/enrollment-status/").text)
+    enrollment_requests = json.loads(requests.get("http://femr-central-api.us-west-2.elasticbeanstalk.com/enrollment-status/").text)
     latest_request_id = max([request.get("requestid") for request in enrollment_requests])
 
     data = {
-        "requestid": latest_request_id + 1,
+        "requestid": event_body.get("request_id", latest_request_id + 1),
         "lastName": event_body.get("last_name"),
         "firstName": event_body.get("first_name"),
         "email": event_body.get("email"),
@@ -38,7 +38,7 @@ def register_request(event_body):
     logging.info(f"Sending enrollment request to fEMR central database: {data}")
 
     response = requests.post(
-        f"http://skelechaingang-env.eba-i65amzvv.us-west-2.elasticbeanstalk.com/enrollment-status/",
+        f"http://femr-central-api.us-west-2.elasticbeanstalk.com/enrollment-status/",
         data=data
     )
 
