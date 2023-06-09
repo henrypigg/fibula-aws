@@ -11,9 +11,10 @@ function AdminEnrollmentManagement() {
     const email = searchParams.get('email');
 
     const handleApprove = async (row) => {
-      console.log('Denying enrollment request for ' + row.email);
+      console.log('Approving enrollment request for ' + row.email);
+      console.log(row)
 
-      await fetch(`https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll/${row.request_id}`, {
+      await fetch(`https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll/${row.requestid}`, {
         method: "PUT",
         body: JSON.stringify({
             response: "Approved"
@@ -22,12 +23,15 @@ function AdminEnrollmentManagement() {
         .then((response) => response.json())
         .then((data) => console.log(data))
         .catch((error) => console.error(error));
+
+      fetchData()
+        .catch((error) => console.error(error));
     }
 
     const handleDeny = async (row) => {
       console.log('Denying enrollment request for ' + row.email);
-
-      await fetch(`https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll/${row.request_id}`, {
+      console.log(row.requestid)
+      await fetch(`https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll/${row.requestid}`, {
         method: "PUT",
         body: JSON.stringify({
             response: "Denied"
@@ -35,6 +39,9 @@ function AdminEnrollmentManagement() {
       })
         .then((response) => response.json())
         .then((data) => console.log(data))
+        .catch((error) => console.error(error));
+
+      fetchData()
         .catch((error) => console.error(error));
     }
 
@@ -61,13 +68,13 @@ function AdminEnrollmentManagement() {
         );
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            await fetch("https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll")
-            .then((response) => response.json())
-            .then((data) => setData(data))
-        }
+    const fetchData = async () => {
+        await fetch("https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll")
+          .then((response) => response.json())
+          .then((data) => setData(data))
+    }
 
+    useEffect(() => {
         fetchData()
             .catch((error) => console.error(error));
     }, []);
@@ -90,7 +97,7 @@ function AdminEnrollmentManagement() {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {data.map((row) => (
+                    {data.filter((request) => (request.enrollmentstatus == 'Pending')).map((row) => (
                         <ExpandableTableRow
                         email={row.email}
                         key={row.requestid}
