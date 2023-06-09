@@ -20,10 +20,10 @@ def format_enrollment_response(event_body):
 
 
 def update_status(event):
-    request_id = event.get('pathParameters', {}).get('request_id', '0')
+    request_id = event.get('pathParameters', {}).get('requestId', '0')
     enrollment_request = json.loads(requests.get(f"http://femr-central-api.us-west-2.elasticbeanstalk.com/enrollment-status/{request_id}").text)
 
-    enrollment_request['enrollmentstatus'] = event.get('body', {}).get("response")
+    enrollment_request['enrollmentstatus'] = json.loads(event.get("body", "{}")).get("response")
 
     logging.info(f"Sending enrollment status update to fEMR central database")
 
@@ -32,7 +32,7 @@ def update_status(event):
         data=enrollment_request
     )
 
-    logging.info(f"Received response from fEMR central database: {response}")
+    logging.info(f"Received response from fEMR central database: {response.text}")
 
 
 def lambda_handler(event, context):
@@ -45,7 +45,7 @@ def lambda_handler(event, context):
     client = boto3.client('sns')
     response = client.publish(
         TargetArn=os.environ["TOPIC_ARN"],
-        Subject=f'fEMR Enrollment Request #{event_body.get("requestid")}',
+        Subject=f'fEMR Enrollment Request #{event_body.get("requestId")}',
         Message=format_enrollment_response(event_body),
         MessageStructure='string'
     )
