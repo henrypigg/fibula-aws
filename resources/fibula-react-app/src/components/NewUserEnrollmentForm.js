@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { FormControl, FormLabel } from '@mui/material';
 
 function ContactForm() {
+  const [submitted, setSubmitted] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ function ContactForm() {
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (event) => {
+    setSubmitted(true);
     event.preventDefault();
     console.log(`First Name: ${firstName}\nLast Name: ${lastName}\nEmail: ${email}\nOrganization: ${organization}\nMessage: ${message}`);
     // You can replace the console.log with your desired submit logic
@@ -31,6 +33,15 @@ function ContactForm() {
       .then((response) => response.json())
       .then((data) => console.log(data))
       .catch((error) => console.error(error));
+
+    setTimeout(() => {
+      setSubmitted(false);
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setOrganization('');
+      setMessage('');
+    }, 1000);
   };
 
   return (
@@ -38,16 +49,17 @@ function ContactForm() {
       <center>
         <h1>New User Enrollment Form</h1>
         <FormControl>
+            {submitted && <p>Submitted!</p>}
             <FormLabel>First Name</FormLabel>
-            <TextField type="text" onChange={(firstName) => setFirstName(firstName.target.value)}></TextField>
+            <TextField type="text" value={firstName} onChange={(firstName) => setFirstName(firstName.target.value)}></TextField>
             <FormLabel>Last Name</FormLabel>
-            <TextField type="text" onChange={(lastName) => setLastName(lastName.target.value)}></TextField>
+            <TextField type="text" value={lastName} onChange={(lastName) => setLastName(lastName.target.value)}></TextField>
             <FormLabel>Email</FormLabel>
-            <TextField type="email" onChange={(email) => setEmail(email.target.value)}></TextField>
+            <TextField type="email" value={email} onChange={(email) => setEmail(email.target.value)}></TextField>
             <FormLabel>Organization</FormLabel>
-            <TextField type="text" onChange={(organization) => setOrganization(organization.target.value)}></TextField>
+            <TextField type="text" value={organization} onChange={(organization) => setOrganization(organization.target.value)}></TextField>
             <FormLabel>Message</FormLabel>
-            <TextField id="outlined-multiline-flexible" multiline maxRows={4} type="text" onChange={(message) => setMessage(message.target.value)}></TextField>
+            <TextField id="outlined-multiline-flexible" multiline maxRows={4} value={message} type="text" onChange={(message) => setMessage(message.target.value)}></TextField>
             <Button onClick={handleSubmit}>Submit</Button>
         </FormControl>
       </center>
