@@ -26,7 +26,7 @@ export class FibulaApi extends Construct {
         const login = this.api.root.addResource('login', {
             defaultCorsPreflightOptions: {
                 allowOrigins: Cors.ALL_ORIGINS,
-                allowMethods: ['GET'],
+                allowMethods: ['PUT'],
                 allowHeaders: Cors.DEFAULT_HEADERS
             }
         });
