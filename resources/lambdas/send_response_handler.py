@@ -44,7 +44,7 @@ def lambda_handler(event, context):
     
     client = boto3.client('sns')
     response = client.publish(
-        TargetArn=os.environ["TOPIC_ARN"],
+        TargetArn=os.environ["RESPONSE_TOPIC_ARN"],
         Subject=f'fEMR Enrollment Request #{event_body.get("requestId")}',
         Message=format_enrollment_response(event_body),
         MessageStructure='string'

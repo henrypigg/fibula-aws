@@ -47,7 +47,7 @@ def register_request(event_body):
 
 def subscribe_to_response_topic(sns_client, email):
     filter_policy = {
-        "email": email
+        "email": [email]
     }
 
     response = sns_client.subscribe(

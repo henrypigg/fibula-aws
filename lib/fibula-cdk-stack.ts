@@ -57,18 +57,6 @@ export class FibulaStack extends cdk.Stack {
       domainName: this.reactApp.distribution.distributionDomainName
     });
 
-    // allow people to SNS:Subscribe to sendEnrollmentRequestTopic
-    this.sendEnrollmentRequestTopic.addToResourcePolicy(
-      new PolicyStatement({
-          actions: ['sns:Subscribe'],
-          principals: [new AnyPrincipal()],
-          resources: [this.sendEnrollmentResponseTopic.topicArn],
-          conditions: {
-              ArnEquals: { "aws:SourceArn": this.fibulaLambdas.sendRequestLambda.functionArn }
-          }
-      })
-    )
-
     // API
     this.api = new FibulaApi(this, 'FibulaApi', {
       fibulaLambdas: this.fibulaLambdas

@@ -60,7 +60,11 @@ export class FibulaLambdas extends Construct {
                     ],
                 },
             }),
-            handler: "send_response_handler.lambda_handler"
+            handler: "send_response_handler.lambda_handler",
+            environment: {
+                RESPONSE_TOPIC_ARN: props.responseTopic.topicArn,
+                DOMAIN_NAME: props.domainName
+            }
         });
 
         this.getEnrollmentRequestsLambdas = new Function(this, 'Function', {
@@ -88,7 +92,7 @@ export class FibulaLambdas extends Construct {
 
         props.requestTopic.grantPublish(this.sendRequestLambda);
         props.responseTopic.grantPublish(this.sendResponseLambda);
-        this.sendResponseLambda.addToRolePolicy(new PolicyStatement({
+        this.sendRequestLambda.addToRolePolicy(new PolicyStatement({
             actions: ['sns:Subscribe'],
             resources: [props.responseTopic.topicArn]
         }));
