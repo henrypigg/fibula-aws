@@ -6,16 +6,16 @@ import requests
 from datetime import datetime
 
 def format_enrollment_response(event_body):
-    if event_body.get("response") == "declined":
+    if event_body.get("response") == "Denied":
         return f"""
-        Your request to enroll in the fEMR program has been declined.
+        Your request to enroll in the fEMR program has been denied.
 
         Message from fEMR administrators: {event_body.get("message", "None")}
         """
     return f"""
     You have been accepted to the fEMR program!
 
-    Click this link to create an account: https://{os.environ["DOMAIN_NAME"]}/makeaccount
+    Click this link to download the installer: https://{os.environ["DOMAIN_NAME"]}/install/mac
     """
 
 
@@ -33,6 +33,8 @@ def update_status(event):
     )
 
     logging.info(f"Received response from fEMR central database: {response.text}")
+    
+    return enrollment_request['email']
 
 
 def lambda_handler(event, context):
@@ -40,16 +42,23 @@ def lambda_handler(event, context):
 
     event_body = json.loads(event.get("body", "{}"))
 
-    update_status(event)
+    email = update_status(event)
     
     client = boto3.client('sns')
     response = client.publish(
         TargetArn=os.environ["RESPONSE_TOPIC_ARN"],
         Subject=f'fEMR Enrollment Request #{event_body.get("requestId")}',
         Message=format_enrollment_response(event_body),
-        MessageStructure='string'
+        MessageStructure='string',
+        MessageAttributes={
+            'email': {
+                'DataType': 'String',
+                'StringValue': email
+            }
+        }
     )
     
+    print(response)
 
     return {
         'statusCode': 200,
