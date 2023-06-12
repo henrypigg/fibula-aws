@@ -13,7 +13,7 @@ def lambda_handler(event, context):
     except:
         user = None
 
-    if user.get("email") is None or user.get("password") != event_body.get("password"):
+    if user is None or user.get("password") != event_body.get("password"):
         is_accepted = False
     else:
         is_accepted = True
