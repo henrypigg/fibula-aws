@@ -25,7 +25,7 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Methods': 'GET',
             'Access-Control-Allow-Headers': 'Content-Type',
         },
-        'body': str({
-            "accepted": is_accepted
+        'body': json.dumps({
+            "accepted": str(is_accepted)
         })
     }
