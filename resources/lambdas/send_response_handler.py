@@ -21,14 +21,14 @@ def format_enrollment_response(event_body):
 
 def update_status(event):
     request_id = event.get('pathParameters', {}).get('requestId', '0')
-    enrollment_request = json.loads(requests.get(f"http://femr-central-api.us-west-2.elasticbeanstalk.com/enrollment-status/{request_id}").text)
+    enrollment_request = json.loads(requests.get(f"http://femr-central-api.us-west-2.elasticbeanstalk.com/enrollment-status/{request_id}/").text)
 
     enrollment_request['enrollmentstatus'] = json.loads(event.get("body", "{}")).get("response")
 
     logging.info(f"Sending enrollment status update to fEMR central database")
 
     response = requests.post(
-        f"http://femr-central-api.us-west-2.elasticbeanstalk.com/enrollment-status/{request_id}",
+        f"http://femr-central-api.us-west-2.elasticbeanstalk.com/enrollment-status/{request_id}/",
         data=enrollment_request
     )
 

@@ -7,6 +7,8 @@ import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { FibulaReactApp } from './fibula-react-app';
 import { FibulaApi } from './fibula-api';
 import { LogicalStage } from './femr-prod-stage';
+import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
+import { AnyPrincipal } from 'aws-cdk-lib/aws-iam';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 interface FibulaStackProps extends cdk.StackProps {
@@ -42,6 +44,17 @@ export class FibulaStack extends cdk.Stack {
       topicName: 'send-enrollment-response'
     })
 
+    // allow people to SNS:Subscribe to sendEnrollmentRequestTopic
+    this.sendEnrollmentRequestTopic.addToResourcePolicy(
+      new PolicyStatement({
+          actions: ['sns:Subscribe'],
+          principals: [new AnyPrincipal()],
+          resources: [this.sendEnrollmentResponseTopic.topicArn],
+          conditions: {
+              ArnEquals: { "aws:SourceArn": this.fibulaLambdas.sendRequestLambda.functionArn }
+          }
+      })
+    )
     // S3 Bucket
     this.installerBucket = new Bucket(this, 'InstallerBucket', {
       bucketName: 'fibula-installer'
