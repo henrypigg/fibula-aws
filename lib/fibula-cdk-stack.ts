@@ -44,17 +44,6 @@ export class FibulaStack extends cdk.Stack {
       topicName: 'send-enrollment-response'
     })
 
-    // allow people to SNS:Subscribe to sendEnrollmentRequestTopic
-    this.sendEnrollmentRequestTopic.addToResourcePolicy(
-      new PolicyStatement({
-          actions: ['sns:Subscribe'],
-          principals: [new AnyPrincipal()],
-          resources: [this.sendEnrollmentResponseTopic.topicArn],
-          conditions: {
-              ArnEquals: { "aws:SourceArn": this.fibulaLambdas.sendRequestLambda.functionArn }
-          }
-      })
-    )
     // S3 Bucket
     this.installerBucket = new Bucket(this, 'InstallerBucket', {
       bucketName: 'fibula-installer'
@@ -67,6 +56,18 @@ export class FibulaStack extends cdk.Stack {
       installerBucket: this.installerBucket,
       domainName: this.reactApp.distribution.distributionDomainName
     });
+
+    // allow people to SNS:Subscribe to sendEnrollmentRequestTopic
+    this.sendEnrollmentRequestTopic.addToResourcePolicy(
+      new PolicyStatement({
+          actions: ['sns:Subscribe'],
+          principals: [new AnyPrincipal()],
+          resources: [this.sendEnrollmentResponseTopic.topicArn],
+          conditions: {
+              ArnEquals: { "aws:SourceArn": this.fibulaLambdas.sendRequestLambda.functionArn }
+          }
+      })
+    )
 
     // API
     this.api = new FibulaApi(this, 'FibulaApi', {
