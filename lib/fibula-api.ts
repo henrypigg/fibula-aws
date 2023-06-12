@@ -22,6 +22,15 @@ export class FibulaApi extends Construct {
                 allowHeaders: Cors.DEFAULT_HEADERS
             }
         });
+
+        const login = this.api.root.addResource('login', {
+            defaultCorsPreflightOptions: {
+                allowOrigins: Cors.ALL_ORIGINS,
+                allowMethods: ['GET'],
+                allowHeaders: Cors.DEFAULT_HEADERS
+            }
+        });
+        login.addMethod('GET', new LambdaIntegration(props.fibulaLambdas.loginLambda));
     
         const enroll = this.api.root.addResource('enroll', {
         defaultCorsPreflightOptions: {

@@ -18,6 +18,7 @@ export class FibulaLambdas extends Construct {
     readonly defaultLambda: Function;
     readonly sendRequestLambda: Function;
     readonly sendResponseLambda: Function;
+    readonly loginLambda: Function;
     readonly getEnrollmentRequestsLambdas: Function;
     readonly getInstallerLambda: Function;
 
@@ -65,6 +66,20 @@ export class FibulaLambdas extends Construct {
                 RESPONSE_TOPIC_ARN: props.responseTopic.topicArn,
                 DOMAIN_NAME: props.domainName
             }
+        });
+
+        this.loginLambda = new Function(scope, 'loginLambda', {
+            runtime: Runtime.PYTHON_3_9,
+            code: Code.fromAsset("resources/lambdas", {
+                bundling: {
+                    image: Runtime.PYTHON_3_9.bundlingImage,
+                    command: [
+                    'bash', '-c',
+                    'pip install -r requirements.txt -t /asset-output && cp -au . /asset-output'
+                    ],
+                },
+            }),
+            handler: "login_handler.lambda_handler"
         });
 
         this.getEnrollmentRequestsLambdas = new Function(this, 'Function', {
