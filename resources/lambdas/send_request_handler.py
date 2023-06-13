@@ -9,9 +9,9 @@ def format_enrollment_request(event_body):
     return f"""
     Received fEMR enrollment request.
 
-    Name: {event_body.get("name", "None")}
+    Name: {event_body.get("last_name")}, {event_body.get("first_name")}
+    Email: {event_body.get("email")}
     Organization: {event_body.get("organization", "None")}
-    Website: {event_body.get("website", "None")}
     Message: {event_body.get("message", "None")}
 
     Click this link to accept or decline this request: https://{os.environ["DOMAIN_NAME"]}/admin/enrollment-requests/?email={event_body.get("email", "None")}
