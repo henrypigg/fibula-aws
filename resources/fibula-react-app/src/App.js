@@ -24,9 +24,6 @@ function App() {
                     <li class="link">
                         <Link to="/enroll/user">User Enrollment Form</Link>
                     </li>
-                    <li class="link">
-                        <Link to="/enroll/coder">Coder Enrollment Form</Link>
-                    </li>
                 </ul>
             </nav>
             
@@ -35,7 +32,6 @@ function App() {
                 <Route path="/install/mac" element={<FemrInstallationGuide />} />
                 <Route path="/install/windows" element={<FemrWindowsInstallationGuide />} />
                 <Route path="/enroll/user" element={<NewUserEnrollmentForm />} />
-                <Route path="/enroll/coder" element={<NewCoderEnrollmentForm />} />
                 <Route path="/admin/enrollment-requests" element={<AdminEnrollmentManagement />} />
             </Routes>
         </Router>

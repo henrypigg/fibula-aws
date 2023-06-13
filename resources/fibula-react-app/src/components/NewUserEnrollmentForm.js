@@ -37,17 +37,14 @@ function ContactForm() {
     <div>
       <center>
         <h1>New User Enrollment Form</h1>
-        <FormControl>
-            <FormLabel>First Name</FormLabel>
-            <TextField type="text" onChange={(firstName) => setFirstName(firstName.target.value)}></TextField>
-            <FormLabel>Last Name</FormLabel>
-            <TextField type="text" onChange={(lastName) => setLastName(lastName.target.value)}></TextField>
-            <FormLabel>Email</FormLabel>
-            <TextField type="email" onChange={(email) => setEmail(email.target.value)}></TextField>
-            <FormLabel>Organization</FormLabel>
-            <TextField type="text" onChange={(organization) => setOrganization(organization.target.value)}></TextField>
-            <FormLabel>Message</FormLabel>
-            <TextField id="outlined-multiline-flexible" multiline maxRows={4} type="text" onChange={(message) => setMessage(message.target.value)}></TextField>
+        <FormControl margin="normal">
+          <div> 
+            <TextField label="First Name" type="text" onChange={(firstName) => setFirstName(firstName.target.value)}></TextField>
+            <TextField label="Last Name" type="text" onChange={(lastName) => setLastName(lastName.target.value)}></TextField>
+          </div>
+            <TextField label="Email" type="email" onChange={(email) => setEmail(email.target.value)}></TextField>
+            <TextField label="Organization" type="text" onChange={(organization) => setOrganization(organization.target.value)}></TextField>
+            <TextField label="Message" id="outlined-multiline-flexible" multiline maxRows={4} type="text" onChange={(message) => setMessage(message.target.value)}></TextField>
             <Button onClick={handleSubmit}>Submit</Button>
         </FormControl>
       </center>

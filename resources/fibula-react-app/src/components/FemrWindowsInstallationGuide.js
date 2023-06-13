@@ -39,10 +39,13 @@ function FemrInstallationGuide() {
                         <h1> How to Install Off-Chain Femr On Windows </h1>
                     </center>
                     <center>
+                        <b> 1. Fill out the User Enrollment Form </b>
+                    </center>
+                    <center>
                         <p>
                             {" "}
                             <b>
-                                &nbsp;&nbsp;1. Download the FEMR Installer
+                                &nbsp;&nbsp;2. Download the FEMR Installer
                             </b>{" "}
                         </p>
                     </center>
@@ -70,7 +73,7 @@ function FemrInstallationGuide() {
                         <p>
                             {" "}
                             <b>
-                                &nbsp;&nbsp;2. Launch the FEMR Installer Package
+                                &nbsp;&nbsp;3. Launch the FEMR Installer Package
                             </b>{" "}
                         </p>
                     </center>
@@ -85,7 +88,7 @@ function FemrInstallationGuide() {
                     <center>
                         <p>
                             {" "}
-                            <b>&nbsp;&nbsp;3. Open Docker</b>{" "}
+                            <b>&nbsp;&nbsp;4. Open Docker</b>{" "}
                         </p>
                     </center>
                     <center>
@@ -108,7 +111,7 @@ function FemrInstallationGuide() {
                         <p>
                             {" "}
                             <b>
-                                &nbsp;&nbsp;4. Launch the FEMR Service
+                                &nbsp;&nbsp;5. Launch the FEMR Service
                             </b>{" "}
                         </p>
                     </center>
@@ -124,7 +127,7 @@ function FemrInstallationGuide() {
                     <center>
                         <p>
                             {" "}
-                            <b>&nbsp;&nbsp;5. Navigate to the FEMR page</b>{" "}
+                            <b>&nbsp;&nbsp;6. Navigate to the FEMR page</b>{" "}
                         </p>
                     </center>
                     <center>

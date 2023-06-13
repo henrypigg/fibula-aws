@@ -44,10 +44,13 @@ function FemrInstallationGuide() {
                         <h1> How to Install Off-Chain Femr On MacOSX </h1>
                     </center>
                     <center>
+                        <b> 1. Fill out the User Enrollment Form </b>
+                    </center>
+                    <center>
                         <p>
                             {" "}
                             <b>
-                                &nbsp;&nbsp;1. Download and Install Docker
+                                &nbsp;&nbsp;2. Download and Install Docker
                             </b>{" "}
                         </p>
                     </center>
@@ -71,7 +74,7 @@ function FemrInstallationGuide() {
                         <p>
                             {" "}
                             <b>
-                                &nbsp;&nbsp;2. Download the FEMR installer
+                                &nbsp;&nbsp;3. Download the FEMR installer
                             </b>{" "}
                         </p>
                     </center>
@@ -91,7 +94,7 @@ function FemrInstallationGuide() {
                     <center>
                         <p>
                             {" "}
-                            <b>&nbsp;&nbsp;3. Open Docker</b>{" "}
+                            <b>&nbsp;&nbsp;4. Open Docker</b>{" "}
                         </p>
                     </center>
                     <center>
@@ -116,7 +119,7 @@ function FemrInstallationGuide() {
                         <p>
                             {" "}
                             <b>
-                                &nbsp;&nbsp;4. Launch the FEMR Installer Package
+                                &nbsp;&nbsp;5. Launch the FEMR Installer Package
                             </b>{" "}
                         </p>
                     </center>
@@ -135,7 +138,7 @@ function FemrInstallationGuide() {
                     <center>
                         <p>
                             {" "}
-                            <b>&nbsp;&nbsp;5. Launch the FEMR service</b>{" "}
+                            <b>&nbsp;&nbsp;6. Launch the FEMR service</b>{" "}
                         </p>
                     </center>
                     <center>
@@ -157,7 +160,7 @@ function FemrInstallationGuide() {
                     <center>
                         <p>
                             {" "}
-                            <b>&nbsp;&nbsp;6. Navigate to the FEMR page</b>{" "}
+                            <b>&nbsp;&nbsp;7. Navigate to the FEMR page</b>{" "}
                         </p>
                     </center>
                     <center>
