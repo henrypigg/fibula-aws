@@ -18,7 +18,7 @@ export class FibulaApi extends Construct {
             proxy: false,
             defaultCorsPreflightOptions: {
                 allowOrigins: Cors.ALL_ORIGINS,
-                allowMethods: ['GET'],
+                allowMethods: ['GET', 'PUT'],
                 allowHeaders: Cors.DEFAULT_HEADERS
             }
         });
@@ -45,7 +45,7 @@ export class FibulaApi extends Construct {
         const requestId = enroll.addResource('{requestId}', {
             defaultCorsPreflightOptions: {
                 allowOrigins: Cors.ALL_ORIGINS,
-                allowMethods: ['GET'],
+                allowMethods: ['GET', 'PUT'],
                 allowHeaders: Cors.DEFAULT_HEADERS
             }
         });
