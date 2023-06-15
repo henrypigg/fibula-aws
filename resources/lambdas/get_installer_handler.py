@@ -37,7 +37,7 @@ def lambda_handler(event, context):
                 ClientMethod='get_object',
                 Params={
                     'Bucket': os.environ['BUCKET_NAME'],
-                    'Key': f'{platform}/{latest_version}/femr-x64-{latest_version}.{"pkg" if platform == "macos" else "msi"}'
+                    'Key': f'{platform}/{latest_version}/femr-x64-{latest_version}.{"pkg" if platform == "macos" else "exe"}'
                 },
                 ExpiresIn=43200
             )
